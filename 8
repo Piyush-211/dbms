@@ -1,0 +1,37 @@
+[8] Consider the following Bank DB schema.
+Deposit(accountno, cname, amount, acctdate,bname)
+Branch(bname,city)
+Customer(cname,city)
+Borrow(loanno, cname, bname,amount)
+Write the following Mysql queries.
+1. List all data from borrow table.
+2. Get customer names who has deposit greater than 1000 and name like “A”. 3. List the
+branches having sum of deposit more than 1000 and located in Mumbai. 4. List 10% interest
+to all depositors living in pune
+5. Transfer Rs 500 from account of Anil to the account of Sunil.
+6. Delete depositors having deposit less than 500.
+SELECT * FROM Borrow;
+SELECT DISTINCT cname 
+FROM Deposit 
+WHERE amount > 1000 AND cname LIKE 'A%';
+
+SELECT d.bname 
+FROM Deposit d 
+INNER JOIN Branch b ON d.bname = b.bname 
+WHERE b.city = 'Mumbai' 
+GROUP BY d.bname 
+HAVING SUM(d.amount) > 1000;
+
+UPDATE Deposit 
+SET amount = amount * 1.10 
+WHERE cname IN (SELECT cname FROM Customer WHERE city = 'Pune');
+
+UPDATE Deposit 
+SET amount = amount - 500 
+WHERE cname = 'Anil';
+
+UPDATE Deposit 
+SET amount = amount + 500 
+WHERE cname = 'Sunil';
+
+DELETE FROM Deposit WHERE amount < 500;
