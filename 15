@@ -1,0 +1,34 @@
+[15] Write a Stored Procedure namely proc_Grade for the categorization of student. If marks scored by
+students in examination is &lt;=1500 and marks&gt;=990 then student will be placed in distinction category if
+marks scored are between 989 and900 category is first class, if marks 899 and 825 category is Higher
+Second Class. Write a PL/SQL block for using procedure created with above requirement.
+Stud_Marks(name, total_marks)
+Result(Roll,Name, Class)
+
+-- Creating the stored procedure proc_Grade
+CREATE PROCEDURE proc_Grade(
+    in_name VARCHAR(255),
+    in_total_marks INT,
+    out_class VARCHAR(255)
+)
+BEGIN
+    IF in_total_marks >= 990 THEN
+        SET out_class = 'Distinction';
+    ELSEIF in_total_marks BETWEEN 900 AND 989 THEN
+        SET out_class = 'First Class';
+    ELSEIF in_total_marks BETWEEN 825 AND 899 THEN
+        SET out_class = 'Higher Second Class';
+    ELSE
+        SET out_class = 'Not Classified';
+    END IF;
+END;
+
+-- PL/SQL block to use the proc_Grade procedure
+SET @name := 'John';
+SET @total_marks := 950;
+SET @class := '';
+
+CALL proc_Grade(@name, @total_marks, @class);
+
+-- Inserting the result into the Result table
+INSERT INTO Result (Name, Class) VALUES (@name, @class);
