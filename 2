@@ -1,0 +1,36 @@
+[2] Design and develop below database and execute following SQL DML statements using MySQL .
+emp (eno, ename, bdate, title, salary, dno)
+proj (pno, pname, budget, dno)
+dept (dno, dname, mgreno)
+workson (eno, pno, hours)
+1) Write an SQL query that returns the project number and name for projects with a budget greater than
+$100,000.
+2) Write an SQL query that returns the employees (number and name only) who have a title of &#39;EE&#39; or &#39;SA&#39; and
+salary more than $35,000.
+3) Write an SQL query that returns the employees (name only) in department &#39;D1&#39; ordered by decreasing
+salary.
+4) Write an SQL query that returns the departments (all fields) ordered by ascending department name.
+
+5) Write an SQL query that returns the employee name, department name, and employee title.
+
+
+SELECT pno, pname
+FROM proj
+WHERE budget > 100000;
+
+SELECT eno, ename
+FROM emp
+WHERE title IN ('EE', 'SA') AND salary > 35000;
+
+SELECT ename
+FROM emp
+WHERE dno = 'D1'
+ORDER BY salary DESC;
+
+SELECT *
+FROM dept
+ORDER BY dname ASC;
+
+SELECT emp.ename, dept.dname, emp.title
+FROM emp
+INNER JOIN dept ON emp.dno = dept.dno;
