@@ -1,0 +1,51 @@
+-- Create BOOK table
+CREATE TABLE BOOK (
+    Book_ISBN INT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Publisher_Name VARCHAR(255),
+    Price DECIMAL(10,2) CHECK (Price > 0),
+    Date_Of_Publication DATE DEFAULT CURRENT_DATE,
+    Book_Copy INT
+);
+
+-- Create BOOK_AUTHORS table
+CREATE TABLE BOOK_AUTHORS (
+    Book_ISBN INT,
+    Author_Name VARCHAR(255),
+    Author_City VARCHAR(255) DEFAULT 'Pune',
+    Phone VARCHAR(20) UNIQUE,
+    PRIMARY KEY (Book_ISBN, Author_Name)
+);
+
+-- Insert records into BOOK table
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Book_Copy)
+VALUES
+    (1, 'Book1', 'Publisher1', 10.99, 10),
+    (2, 'Book2', 'Publisher2', 15.99, 12),
+    (3, 'Book3', 'Publisher3', 20.99, 14),
+    (4, 'Book4', 'Publisher4', 25.99, 16),
+    (5, 'Book5', 'Publisher5', 30.99, 18);
+
+-- Insert records into BOOK_AUTHORS table
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Phone)
+VALUES
+    (1, 'Author1', '123-456-7890'),
+    (2, 'Author2', '234-567-8901'),
+    (3, 'Author3', '345-678-9012'),
+    (4, 'Author4', '456-789-0123'),
+    (5, 'Author5', '567-890-1234');
+
+SELECT Title FROM BOOK WHERE Book_Copy BETWEEN 10 AND 15;
+
+UPDATE BOOK SET Book_Copy = 10 WHERE Publisher_Name = 'Tata MacGraw Hill';
+
+SELECT Publisher_Name FROM BOOK GROUP BY Publisher_Name ORDER BY COUNT(*) DESC LIMIT 1;
+
+SELECT Publisher_Name, COUNT(*) AS Books_Published
+FROM BOOK
+GROUP BY Publisher_Name
+ORDER BY Books_Published ASC;
+
+SELECT *
+FROM BOOK
+WHERE Book_ISBN IN (SELECT Book_ISBN FROM BOOK_AUTHORS WHERE Author_City = 'Pune');
