@@ -1,0 +1,22 @@
+[10] A database consists of following tables.
+PROJECT(PNO, PNAME, CHIEF)
+EMPLOYEE(EMPNO, EMPNAME)
+ASSIGNED(PNO,EMPNO)
+A. Get count of employees working on project.
+B. Get details of employee working on project pr002.
+C. Get details of employee working on project DBMS.
+
+SELECT COUNT(EMPNO) AS num_employees_working
+FROM ASSIGNED
+WHERE PNO = 'project_number'; -- Replace 'project_number' with the project number you're interested in.
+
+SELECT EMPLOYEE.*
+FROM EMPLOYEE
+INNER JOIN ASSIGNED ON EMPLOYEE.EMPNO = ASSIGNED.EMPNO
+WHERE ASSIGNED.PNO = 'pr002';
+
+SELECT EMPLOYEE.*
+FROM EMPLOYEE
+INNER JOIN ASSIGNED ON EMPLOYEE.EMPNO = ASSIGNED.EMPNO
+INNER JOIN PROJECT ON ASSIGNED.PNO = PROJECT.PNO
+WHERE PROJECT.PNAME = 'DBMS';
